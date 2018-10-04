@@ -1,0 +1,108 @@
+@import './init';
+@import './extend';
+@import './mixin';
+
+@import '../sprites/sprites';    //  引入精灵图
+
+//  页面样式
+html{
+    // font-size: 10vw;
+}
+main{
+    position: relative;
+    &>section{
+        height: 1900px;     //  设计稿高度
+        width: 100%;       //  设计稿宽度
+        display: none; 
+        @extend %vertical;
+        &.active{
+            display: block;
+        }
+    }
+}
+
+//  情景一
+.part-1{
+    background: #eb5405;
+    .p1-loading{
+        width: 702px;
+        height: 533px;
+        @extend %horizontal;
+        top: 570px;
+    }
+    .p1-t1{
+        display: none;
+        width: 383px;
+        height: 33px;
+        @extend %horizontal;
+        top: 960px;
+    }
+    .p1-t2{
+        display: none;
+        width: 453px;
+        height: 73px;
+        @extend %horizontal;
+        top: 960px;
+    }
+    .p1-process{
+        @extend %horizontal;
+        top: 1066px;
+        font-size: 34px;
+        color: #fff;
+    }
+    
+    .show{
+        display: block;
+    }
+}
+
+//  场景二
+.part-2{
+    background: url(../img/p2-bg.png) center center no-repeat;
+    background-size: 100%;
+
+    @keyframes p2-word {
+        0%{ height: 0; }
+        15%{ height: 50px; }
+        30%{ height: 100px; }
+        45%{ height: 150px; }
+        60%{ height: 203px; }
+        95%{ opacity: 1;}
+        100%{ opacity: 0;height: 203px; }
+    }
+    @keyframes hand {
+        0%{transform: translate3d(50px,50px,0);opacity: 0;}
+        60%{transform: translate3d(0,0,0); opacity: 1;}
+        70%{opacity: 0;}
+        80%{opacity: 1;}
+        90%{opacity: 0;}
+        100%{transform: translate3d(0,0,0);opacity: 1;}
+    }
+    @keyframes click {
+        0%{opacity: 0;}
+        100%{opacity: 1;}
+    }
+    
+    .p2-word{
+        width: 729px;
+        @include absolute(35px,1352px);
+        background: url(../img/p2-words.png); 
+        background-size: 100%;
+        animation: p2-word 6s linear 1s forwards;
+        perspective: 1000;
+    }
+    .hand{
+        @include sprite($hand);
+        @include absolute(619px, 857px);
+        opacity: 0;
+        animation: hand 2s linear 7s forwards;
+        perspective: 1000;
+    }
+    .click{ 
+        @include sprite($click);
+        @include absolute(681px, 877px);
+        opacity: 0;
+        animation: click 1s linear 8s forwards;
+        perspective: 1000;
+    }
+}
